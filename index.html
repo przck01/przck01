@@ -2,34 +2,68 @@
 <html>
 <head>
     <title>Dla Ciebie ❤️</title>
+
     <style>
         body {
             font-family: Arial;
             text-align: center;
-            background-color: #ffe6f0;
+            background: linear-gradient(to bottom, #ffe6f0, #fff);
             padding: 50px;
         }
+
+        #content {
+            display: none;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff6699;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff3366;
+        }
+
         img {
             width: 300px;
             border-radius: 15px;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
 
-<h1>Wszystkiego najlepszego! 🎉</h1>
+<h1>Hej ❤️</h1>
 
-<p>
-Dziękuję, że jesteś ❤️<br>
-Mam nadzieję, że ten dzień będzie dla Ciebie wyjątkowy.
-</p>
+<p>Przygotowałam coś dla Ciebie...</p>
 
-<img src="https://via.placeholder.com/300">
+<button onclick="showContent()">Kliknij tutaj 🎁</button>
 
-<p>
-Kocham Cię 💕
-</p>
+<div id="content">
+    <h2>Wszystkiego najlepszego! 🎉</h2>
+
+    <p>
+        Dziękuję, że jesteś ❤️<br><br>
+        Każdy dzień z Tobą jest lepszy.
+    </p>
+
+    <img src="https://via.placeholder.com/300">
+
+    <p>❤️</p>
+</div>
+
+<script>
+function showContent() {
+    document.getElementById("content").style.display = "block";
+}
+</script>
 
 </body>
 </html>
