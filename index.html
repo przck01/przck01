@@ -38,7 +38,56 @@
             padding: 30px;
             animation: fadeIn 1s;
         }
-        
+
+        /* 🎁 MAŁY PREZENT */
+        #giftBtn {
+            display: none;
+            position: fixed;
+            right: 40px;
+            top: 40%;
+            font-size: 40px;
+            cursor: pointer;
+            animation: fadeIn 1s;
+        }
+
+        /* 🎁 DRUGA STRONA */
+        #giftPage {
+            display: none;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: #ff6f91;
+            border-radius: 10px;
+        }
+
+        .lid {
+            position: absolute;
+            width: 200px;
+            height: 40px;
+            background: #ff3e6c;
+            top: -40px;
+            left: 0;
+            border-radius: 5px;
+            transition: 1s;
+        }
+
+        .photo {
+            position: absolute;
+            width: 180px;
+            top: 20px;
+            left: 10px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1s;
+        }
+
         button {
             padding: 18px 30px;
             font-size: 22px;
@@ -91,7 +140,7 @@
 <div id="start">
     <h1>Hi ❤️</h1>
 
-    <p>I've heard some handsome boy has birthday today...</p>
+    <p>I heard that some handsome boy has a birthday today...</p>
     <p>Do you know who it might be?</p>
 
     <div class="buttons">
@@ -115,9 +164,25 @@
     <p>Paula</p>
 </div>
 
+<!-- 🎁 MAŁY PRZYCISK PREZENTU -->
+<div id="giftBtn" onclick="openGift()">🎁</div>
+
+<!-- 🎁 STRONA PREZENTU -->
+<div id="giftPage">
+    <div class="gift-box" onclick="openBox()">
+        <div class="lid" id="lid"></div>
+        <img src="IMG_3983.JPEG" class="photo" id="photo">
+    </div>
+</div>
+
 <!-- 🎵 muzyka -->
 <audio id="music">
   <source src="nastelbom-happy-birthday-471481.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 💋 dźwięk całusa -->
+<audio id="kiss">
+  <source src="kiss.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -126,9 +191,33 @@ function showContent() {
     document.getElementById("content").style.display = "block";
 
     startConfetti();
-
-    // ▶️ odtwórz muzykę
     document.getElementById("music").play();
+
+    // 🎁 pokaż prezent po 3 sekundach
+    setTimeout(() => {
+        document.getElementById("giftBtn").style.display = "block";
+    }, 3000);
+}
+
+// 🎁 przejście do strony prezentu
+function openGift() {
+    document.getElementById("content").style.display = "none";
+    document.getElementById("giftBtn").style.display = "none";
+
+    const page = document.getElementById("giftPage");
+    page.style.display = "flex";
+}
+
+// 🎁 animacja otwierania
+function openBox() {
+    document.getElementById("lid").style.transform = "translateY(-80px)";
+    
+    const photo = document.getElementById("photo");
+    photo.style.opacity = "1";
+    photo.style.transform = "translateY(0px)";
+
+    // 💋 dźwięk
+    document.getElementById("kiss").play();
 }
 
 // 🎊 konfetti
