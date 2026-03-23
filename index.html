@@ -194,7 +194,7 @@
 <!-- 🔐 LOCK SCREEN -->
 <div id="lockScreen">
     <h2>Enter password ❤️</h2>
-    <input type="polandspring" id="passwordInput">
+    <input type="password" id="passwordInput">
     <button onclick="checkPassword()">Enter</button>
 </div>
 
@@ -249,7 +249,7 @@
 function checkPassword() {
     const input = document.getElementById("passwordInput").value;
 
-    if(input === "1234") { // ← zmień hasło tutaj
+    if(input === "polandspring") { // 
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("start").style.display = "flex";
     } else {
