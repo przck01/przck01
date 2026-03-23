@@ -14,7 +14,6 @@
             overflow-x: hidden;
         }
 
-        /* wyśrodkowanie pierwszej sekcji */
         #start {
             display: flex;
             flex-direction: column;
@@ -23,13 +22,11 @@
             height: 100vh;
         }
 
-        /* kontener przycisków */
         .buttons {
             display: flex;
             gap: 20px;
             justify-content: center;
             margin-top: 20px;
-            position: relative;
         }
 
         #content {
@@ -39,7 +36,7 @@
             animation: fadeIn 1s;
         }
 
-        /* 🎁 MAŁY PREZENT */
+        /* 🎁 przycisk prezentu */
         #giftBtn {
             display: none;
             position: fixed;
@@ -47,10 +44,9 @@
             top: 40%;
             font-size: 40px;
             cursor: pointer;
-            animation: fadeIn 1s;
         }
 
-        /* 🎁 DRUGA STRONA */
+        /* 🎁 strona prezentu */
         #giftPage {
             display: none;
             height: 100vh;
@@ -59,32 +55,66 @@
             flex-direction: column;
         }
 
+        /* 🎁 pudełko */
         .gift-box {
             position: relative;
-            width: 200px;
-            height: 200px;
-            background: #ff6f91;
-            border-radius: 10px;
+            width: 220px;
+            height: 180px;
+            background: #ff4d6d;
+            border-radius: 12px;
+            cursor: pointer;
         }
 
+        /* wstążka pionowa */
+        .gift-box::before {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 100%;
+            background: #ffd166;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* wstążka pozioma */
+        .gift-box::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            background: #ffd166;
+            top: 50px;
+        }
+
+        /* pokrywka */
         .lid {
             position: absolute;
-            width: 200px;
-            height: 40px;
-            background: #ff3e6c;
-            top: -40px;
+            width: 220px;
+            height: 50px;
+            background: #ff758f;
+            top: -50px;
             left: 0;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: 1s;
         }
 
+        /* kokardka */
+        .bow {
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+        }
+
+        /* zdjęcie */
         .photo {
             position: absolute;
             width: 180px;
-            top: 20px;
-            left: 10px;
+            left: 20px;
+            top: 40px;
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(-100px);
             transition: 1s;
         }
 
@@ -118,7 +148,6 @@
             to {opacity: 1;}
         }
 
-        /* konfetti */
         .confetti {
             position: fixed;
             width: 10px;
@@ -140,7 +169,7 @@
 <div id="start">
     <h1>Hi ❤️</h1>
 
-    <p>I heard that some handsome boy has a birthday today...</p>
+    <p>I've heard some handsome boy has birthday today...</p>
     <p>Do you know who it might be?</p>
 
     <div class="buttons">
@@ -164,13 +193,14 @@
     <p>Paula</p>
 </div>
 
-<!-- 🎁 MAŁY PRZYCISK PREZENTU -->
+<!-- 🎁 przycisk -->
 <div id="giftBtn" onclick="openGift()">🎁</div>
 
-<!-- 🎁 STRONA PREZENTU -->
+<!-- 🎁 strona prezentu -->
 <div id="giftPage">
     <div class="gift-box" onclick="openBox()">
         <div class="lid" id="lid"></div>
+        <div class="bow">🎀</div>
         <img src="IMG_3983.JPEG" class="photo" id="photo">
     </div>
 </div>
@@ -180,9 +210,9 @@
   <source src="nastelbom-happy-birthday-471481.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 💋 dźwięk całusa -->
+<!-- 💋 całus -->
 <audio id="kiss">
-  <source src="kiss.mp3" type="audio/mpeg">
+  <source src="djartmusic-valentines-kissing-transition_10-297312" type="audio/mpeg">
 </audio>
 
 <script>
@@ -193,25 +223,26 @@ function showContent() {
     startConfetti();
     document.getElementById("music").play();
 
-    // 🎁 pokaż prezent po 3 sekundach
     setTimeout(() => {
         document.getElementById("giftBtn").style.display = "block";
     }, 3000);
 }
 
-// 🎁 przejście do strony prezentu
 function openGift() {
     document.getElementById("content").style.display = "none";
     document.getElementById("giftBtn").style.display = "none";
 
-    const page = document.getElementById("giftPage");
-    page.style.display = "flex";
+    // ⛔ zatrzymaj muzykę
+    const music = document.getElementById("music");
+    music.pause();
+    music.currentTime = 0;
+
+    document.getElementById("giftPage").style.display = "flex";
 }
 
-// 🎁 animacja otwierania
 function openBox() {
-    document.getElementById("lid").style.transform = "translateY(-80px)";
-    
+    document.getElementById("lid").style.transform = "translateY(-100px)";
+
     const photo = document.getElementById("photo");
     photo.style.opacity = "1";
     photo.style.transform = "translateY(0px)";
@@ -220,14 +251,13 @@ function openBox() {
     document.getElementById("kiss").play();
 }
 
-// 🎊 konfetti
 function startConfetti() {
     for (let i = 0; i < 120; i++) {
         let confetti = document.createElement("div");
         confetti.classList.add("confetti");
 
         confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor = 
+        confetti.style.backgroundColor =
             ["#ff4d6d", "#ffd166", "#06d6a0", "#118ab2"][Math.floor(Math.random()*4)];
         confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
 
@@ -237,7 +267,6 @@ function startConfetti() {
     }
 }
 
-// 😏 uciekający przycisk
 const noBtn = document.getElementById("noBtn");
 
 noBtn.addEventListener("mouseover", () => {
