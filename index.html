@@ -14,7 +14,6 @@
             overflow-x: hidden;
         }
 
-        /* 🔐 ekran hasła */
         #lockScreen {
             position: fixed;
             width: 100%;
@@ -35,7 +34,6 @@
             margin-top: 10px;
         }
 
-        /* 🔽 poprawione – przycisk niżej */
         #lockScreen button {
             margin-top: 20px;
         }
@@ -79,7 +77,6 @@
             position: relative;
         }
 
-        /* 🌑 CIEMNE TŁO */
         #overlay {
             display: none;
             position: fixed;
@@ -89,7 +86,6 @@
             z-index: 6;
         }
 
-        /* 💡 SPOTLIGHT */
         #spotlight {
             position: fixed;
             top: 50%;
@@ -102,7 +98,6 @@
             z-index: 7;
         }
 
-        /* 🎁 pudełko */
         .gift-box {
             position: relative;
             width: 220px;
@@ -132,27 +127,32 @@
             font-size: 28px;
         }
 
-        /* 🎬 VIDEO */
+        /* 🎬 VIDEO – KLUCZOWA POPRAWKA */
         .video {
             position: absolute;
             width: 160px;
             left: 50%;
             top: 0;
+
             transform: translateX(-50%) translateY(-120px) scale(0.7);
             opacity: 0;
-            transition: 0.8s ease;
+
+            /* 🔥 TERAZ DZIAŁA PŁYNNE POWIĘKSZENIE */
+            transition: transform 1.2s ease, opacity 0.6s ease;
+
             border-radius: 12px;
             z-index: 10;
         }
 
-        /* 🎬 stan końcowy – środek + powiększenie */
         .video.show {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(5.2);
+
+            /* 🎯 KOŃCOWY ROZMIAR – TU GO ZMIENIASZ */
+            transform: translate(-50%, -50%) scale(1.5);
+
             opacity: 1;
-            z-index: 10;
         }
 
         button {
@@ -211,7 +211,6 @@
 
 <div id="giftBtn" onclick="openGift()">🎁</div>
 
-<!-- 🌑 overlay + spotlight -->
 <div id="overlay"></div>
 <div id="spotlight"></div>
 
@@ -281,15 +280,16 @@ function openBox() {
 
     const video = document.getElementById("video");
 
-    // 🎬 start – wychodzi z pudełka
     video.style.opacity = "1";
+
+    // startowa animacja
     video.style.transform = "translateX(-50%) translateY(-180px) scale(1)";
+
     video.play();
 
-    // 🎬 potem – przejście na środek + większe powiększenie
     setTimeout(() => {
         video.classList.add("show");
-    }, 700);
+    }, 500);
 
     document.getElementById("kiss").play();
 }
