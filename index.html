@@ -35,6 +35,7 @@
             margin-top: 10px;
         }
 
+        /* 🔽 poprawione – przycisk niżej */
         #lockScreen button {
             margin-top: 20px;
         }
@@ -45,7 +46,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(to bottom, #ffc1d6, #ffeaf3);
         }
 
         .buttons {
@@ -140,22 +140,19 @@
             top: 0;
             transform: translateX(-50%) translateY(-120px) scale(0.5);
             opacity: 0;
+            transition: 0.8s ease;
             border-radius: 12px;
-
-            /* 🔥 KLUCZ – płynna animacja */
-            transition: transform 1.2s ease, opacity 0.6s ease;
             z-index: 10;
         }
 
-        /* 🎬 start animacji */
+        /* 🎬 stan końcowy – środek + powiększenie */
         .video.show {
             position: fixed;
             top: 50%;
             left: 50%;
-
-            /* 📈 stopniowe powiększenie (~+50%) */
-            transform: translate(-50%, -50%) scale(1.5);
+            transform: translate(-50%, -50%) scale(2.2);
             opacity: 1;
+            z-index: 10;
         }
 
         button {
@@ -170,11 +167,6 @@
 
         button:hover {
             background-color: #FAA0A0;
-        }
-
-        /* 🖼️ STAŁE TŁO POD ZDJĘCIEM */
-        #content {
-            background: linear-gradient(to bottom, #ffc1d6, #ffeaf3);
         }
 
         img {
@@ -203,8 +195,6 @@
         <button onclick="showContent()">Yes</button>
         <button id="noBtn">No</button>
     </div>
-
-    <img src="IMG_3983.JPEG">
 </div>
 
 <div id="content">
@@ -215,10 +205,13 @@
         You've been making the world a better place for 24 years ❤️<br><br>
         May all your dreams come true!
     </p>
+
+    <img src="IMG_3983.JPEG">
 </div>
 
 <div id="giftBtn" onclick="openGift()">🎁</div>
 
+<!-- 🌑 overlay + spotlight -->
 <div id="overlay"></div>
 <div id="spotlight"></div>
 
@@ -288,13 +281,15 @@ function openBox() {
 
     const video = document.getElementById("video");
 
+    // 🎬 start – wychodzi z pudełka
     video.style.opacity = "1";
-    video.style.transform = "translateX(-50%) translateY(-180px) scale(0.7)";
+    video.style.transform = "translateX(-50%) translateY(-180px) scale(1)";
     video.play();
 
+    // 🎬 potem – przejście na środek + większe powiększenie
     setTimeout(() => {
         video.classList.add("show");
-    }, 500);
+    }, 700);
 
     document.getElementById("kiss").play();
 }
