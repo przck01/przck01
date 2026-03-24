@@ -14,6 +14,26 @@
             overflow-x: hidden;
         }
 
+        /* 🔙 BACK BUTTON */
+        #backBtn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            padding: 8px 14px;
+            font-size: 14px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.4);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #backBtn:hover {
+            background: rgba(0,0,0,0.6);
+        }
+
         #lockScreen {
             position: fixed;
             width: 100%;
@@ -126,20 +146,14 @@
             font-size: 28px;
         }
 
-        /* 🎬 VIDEO – POPRAWIONA ANIMACJA */
         .video {
             position: absolute;
             width: 160px;
             left: 50%;
             top: 0;
-
-            /* START */
             transform: translate(-50%, -120px) scale(0.5);
             opacity: 0;
-
-            /* PŁYNNA ANIMACJA */
             transition: transform 1.5s ease, opacity 0.8s ease;
-
             border-radius: 12px;
             z-index: 10;
         }
@@ -148,10 +162,7 @@
             position: fixed;
             top: 50%;
             left: 50%;
-
-            /* FINALNY ROZMIAR — TU ZMIENIASZ POWIĘKSZENIE */
             transform: translate(-50%, -50%) scale(2.0);
-
             opacity: 1;
         }
 
@@ -179,6 +190,8 @@
 </head>
 
 <body>
+
+<button id="backBtn" onclick="goBack()">← Back</button>
 
 <div id="lockScreen">
     <h2>Enter password ❤️</h2>
@@ -239,12 +252,15 @@
 </audio>
 
 <script>
+let currentScreen = "start";
+
 function checkPassword() {
     const input = document.getElementById("passwordInput").value;
 
     if(input === "polandspring") {
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("start").style.display = "flex";
+        currentScreen = "start";
     } else {
         alert("Wrong password 😏");
     }
@@ -253,6 +269,9 @@ function checkPassword() {
 function showContent() {
     document.getElementById("start").style.display = "none";
     document.getElementById("content").style.display = "block";
+    document.getElementById("backBtn").style.display = "block";
+
+    currentScreen = "content";
 
     document.getElementById("music").play();
 
@@ -273,6 +292,38 @@ function openGift() {
     music.currentTime = 0;
 
     document.getElementById("giftPage").style.display = "flex";
+
+    currentScreen = "gift";
+}
+
+function goBack() {
+    if (currentScreen === "content") {
+        document.getElementById("content").style.display = "none";
+        document.getElementById("start").style.display = "flex";
+        document.getElementById("backBtn").style.display = "none";
+
+        document.getElementById("music").pause();
+        document.getElementById("music").currentTime = 0;
+
+        currentScreen = "start";
+    }
+
+    else if (currentScreen === "gift") {
+        document.getElementById("giftPage").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("spotlight").style.display = "none";
+
+        document.getElementById("content").style.display = "block";
+        document.getElementById("giftBtn").style.display = "block";
+
+        const video = document.getElementById("video");
+        video.pause();
+        video.currentTime = 0;
+        video.classList.remove("show");
+        video.style.opacity = "0";
+
+        currentScreen = "content";
+    }
 }
 
 function openBox() {
@@ -280,11 +331,9 @@ function openBox() {
 
     const video = document.getElementById("video");
 
-    // START animacji
     video.style.opacity = "1";
     video.play();
 
-    // dopiero po chwili przejście do klasy (animacja CSS)
     setTimeout(() => {
         video.classList.add("show");
     }, 500);
